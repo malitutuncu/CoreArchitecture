@@ -1,2 +1,1 @@
-# CoreArchitecture
-Net Core Backend Architecture
+# CoreAPI
