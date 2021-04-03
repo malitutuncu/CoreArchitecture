@@ -1,12 +1,12 @@
-﻿using Data.Extends;
+﻿using Data.User;
 using FluentValidation;
 
 namespace Business.Services.KullaniciService.ValidationRules
 {
-    public class KullaniciUpsertValidator : AbstractValidator<KullaniciUpsertDto>
+    public class UserAddOrEditValidator : AbstractValidator<UserDetailDto>
     {
         //todo: multiple dil eklenecek
-        public KullaniciUpsertValidator()
+        public UserAddOrEditValidator()
         {
             RuleFor(x => x.AdiSoyadi).NotEmpty().OverridePropertyName("Adı Soyadı");
             RuleFor(x => x.KullaniciAdi).NotEmpty();

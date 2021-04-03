@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class BaseService<TEntity, TExtend, TTableItem, TListFilter, TUpsertValidator> :
-        IBaseService<TEntity, TExtend, TTableItem, TListFilter>
+    public class CrudService<TEntity, TDetailDto, TListItemDto, TListFilterDto> :
+        ICrudService<TEntity, TDetailDto, TListItemDto, TListFilterDto>
         where TEntity : class, IEntity
-        where TExtend : class
+        where TDetailDto : class
     {
         private readonly IUnitOfWork<TEntity> _uow;
         private readonly IMapper _mapper;
@@ -24,61 +24,61 @@ namespace Business.Concrete
         private static Type UpsertValidatorType;
         private IValidator _validator;
 
-        public BaseService(IUnitOfWork<TEntity> uow, IMapper mapper)
+        public CrudService(IUnitOfWork<TEntity> uow, IMapper mapper)
         {
             _uow = uow;
             _mapper = mapper;
             // _validator = TUpsertValidator; //new KullaniciUpsertValidator();
 
-            UpsertValidatorType = typeof(KullaniciUpsertValidator);//GetType().GetGenericArguments()[0];
+            UpsertValidatorType = typeof(UserAddOrEditValidator);//GetType().GetGenericArguments()[0];
             //var str = "Product.List"
         }
 
-        public async virtual Task<IDataResult<TExtend>> AddAsync(TExtend extEntity)
+        public async virtual Task<IDataResult<TDetailDto>> AddAsync(TDetailDto extEntity)
         {
             ValidationTool.Validate(_validator, extEntity);
 
             var entity = _mapper.Map<TEntity>(extEntity);
             var addedEntity = await _uow.Repository.AddAsync(entity);
             await _uow.CommitAsync();
-            return Success(_mapper.Map<TExtend>(addedEntity));
+            return Success(_mapper.Map<TDetailDto>(addedEntity));
         }
 
-        public async virtual Task<IDataResult<TExtend>> UpdateAsync(TExtend extEntity)
+        public async virtual Task<IDataResult<TDetailDto>> UpdateAsync(TDetailDto extEntity)
         {
             var entity = _mapper.Map<TEntity>(extEntity);
             var updateEntity = await _uow.Repository.UpdateAsync(entity);
             await _uow.CommitAsync();
-            return Success(_mapper.Map<TExtend>(updateEntity));
+            return Success(_mapper.Map<TDetailDto>(updateEntity));
         }
 
-        public async Task<IResult> DeleteAsync(TExtend extEntity)
+        public async Task<IResult> DeleteAsync(TDetailDto extEntity)
         {
             var entity = _mapper.Map<TEntity>(extEntity);
             await Task.Run(() => { _uow.Repository.DeleteAsync(entity); });
             return Success();
         }
 
-        public async virtual Task<IDataResult<IEnumerable<TTableItem>>> GetListAsync(TListFilter filter)
+        public async virtual Task<IDataResult<IEnumerable<TListItemDto>>> GetListAsync(TListFilterDto filter)
         {
             return await BaseGetListAsync();
         }
 
-        public async virtual Task<PagedResult<IEnumerable<TTableItem>>> GetPagedListAsync(int pageNumber, int pageSize, TListFilter filter)
+        public async virtual Task<PagedResult<IEnumerable<TListItemDto>>> GetPagedListAsync(int pageNumber, int pageSize, TListFilterDto filter)
         {
             return await BaseGetPagedListAsync(pageNumber, pageSize);
         }
 
-        public async Task<IDataResult<TExtend>> GetAsync(Expression<Func<TEntity, bool>> expression)
+        public async Task<IDataResult<TDetailDto>> GetAsync(Expression<Func<TEntity, bool>> expression)
         {
             var entity = await _uow.Repository.GetAsync(expression);
-            return Success(_mapper.Map<TExtend>(entity));
+            return Success(_mapper.Map<TDetailDto>(entity));
         }
 
-        public async Task<IDataResult<TExtend>> GetByIdAsync(int id)
+        public async Task<IDataResult<TDetailDto>> GetByIdAsync(int id)
         {
             var entity = await _uow.Repository.GetByIdAsync(id);
-            return Success(_mapper.Map<TExtend>(entity));
+            return Success(_mapper.Map<TDetailDto>(entity));
         }
 
         public async Task<IDataResult<int>> GetCountAsync(Expression<Func<TEntity, bool>> expression = null)
@@ -93,7 +93,7 @@ namespace Business.Concrete
             return Success(count);
         }
 
-        protected async Task<IDataResult<IEnumerable<TTableItem>>> BaseGetListAsync(Expression<Func<TEntity, bool>> expression = null)
+        protected async Task<IDataResult<IEnumerable<TListItemDto>>> BaseGetListAsync(Expression<Func<TEntity, bool>> expression = null)
         {
             IEnumerable<TEntity> entityList;
             if (expression == null)
@@ -101,17 +101,17 @@ namespace Business.Concrete
             else
                 entityList = await _uow.Repository.GetListAsync(expression);
 
-            return Success(_mapper.Map<IEnumerable<TTableItem>>(entityList));
+            return Success(_mapper.Map<IEnumerable<TListItemDto>>(entityList));
         }
 
-        protected async Task<PagedResult<IEnumerable<TTableItem>>> BaseGetPagedListAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> expression = null)
+        protected async Task<PagedResult<IEnumerable<TListItemDto>>> BaseGetPagedListAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> expression = null)
         {
             var response = await _uow.Repository.GetPagedListAsync(pageNumber, pageSize, expression);
 
             var totalCount = response.Item2;
-            var list = _mapper.Map<IEnumerable<TTableItem>>(response.Item1);
+            var list = _mapper.Map<IEnumerable<TListItemDto>>(response.Item1);
 
-            return new PagedResult<IEnumerable<TTableItem>>(list, totalCount, pageNumber, pageSize);
+            return new PagedResult<IEnumerable<TListItemDto>>(list, totalCount, pageNumber, pageSize);
         }
 
         public IResult Success()

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Kullanici
+namespace Data.User
 {
-    public class KullaniciTableFilter : TableFilter
+    public class UserListFilterDto : ListFilter
     {
         public string KullaniciAdi { get; set; }
     }

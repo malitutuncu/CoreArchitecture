@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Kullanici
+namespace DataAccess.Entities.User
 {
-    public class Kullanici : BaseKullanici, IEntity
+    public class User : BaseUser, IEntity
     {
-        public Kullanici()
+        public User()
         {
             CreatedDate = DateTime.Now;
         }
@@ -17,5 +17,8 @@ namespace Data.Kullanici
         public DateTime UpdatedDate { get; set; }
         public byte[] ParolaSalt { get; set; }
         public byte[] ParolaHash { get; set; }
+
+
     }
+
 }

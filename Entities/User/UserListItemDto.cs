@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Kullanici
+namespace Data.User
 {
-    public class BaseKullanici
+    public class UserListItemDto
     {
-        public BaseKullanici()
-        {
-            Durum = true;
-        }
         public int Id { get; set; }
         public string KullaniciAdi { get; set; }
         public string AdiSoyadi { get; set; }

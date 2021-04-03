@@ -1,4 +1,4 @@
-﻿using Data.Entity;
+﻿using Data.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Configurations
+namespace DataAccess.Entities.User
 {
-    public class KullaniciConfiguration : IEntityTypeConfiguration<Kullanici>
+    public class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Kullanici> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable(name: "Kullanici");
+            builder.ToTable(name: "User");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.AdiSoyadi).IsRequired().HasMaxLength(100);
             builder.Property(x => x.CreatedDate).IsRequired();

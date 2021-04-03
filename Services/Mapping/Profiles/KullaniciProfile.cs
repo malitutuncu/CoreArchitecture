@@ -8,11 +8,11 @@ namespace Business.Mapping.Profiles
     {
         public KullaniciProfile()
         {
-            CreateMap<Kullanici, KullaniciUpsertDto>();
-            CreateMap<KullaniciUpsertDto, Kullanici>();
+            CreateMap<Kullanici, UserDetailDto>();
+            CreateMap<UserDetailDto, Kullanici>();
 
-            CreateMap<Kullanici, KullaniciTableItem>();
-            CreateMap<KullaniciTableItem, Kullanici>();
+            CreateMap<Kullanici, UserListItemDto>();
+            CreateMap<UserListItemDto, Kullanici>();
         }
     }
 }

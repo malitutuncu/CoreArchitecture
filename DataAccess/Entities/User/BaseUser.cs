@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.TableItem
+namespace DataAccess.Entities.User
 {
-    public class KullaniciTableItem
+    public class BaseUser
     {
+        public BaseUser()
+        {
+            Durum = true;
+        }
         public int Id { get; set; }
         public string KullaniciAdi { get; set; }
         public string AdiSoyadi { get; set; }

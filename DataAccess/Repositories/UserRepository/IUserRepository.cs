@@ -1,15 +1,15 @@
 ﻿using Core.Data;
 using Core.DataAccess;
-using Data.Entity;
+using Data.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Repositories.Abstract
+namespace DataAccess.Repositories.UserRepository
 {
-    public interface IKullaniciRepository : IRepository<Kullanici>
+    public interface IUserRepository : IRepository<User>
     {
     }
 }

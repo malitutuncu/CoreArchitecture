@@ -1,20 +1,19 @@
 ﻿using AutoMapper;
-using Data.Extends;
-using Data.TableItem;
+using Data.User;
 using System.Collections.Generic;
 
 namespace Business.Mapping.Profiles
 {
     public static class KullaniciMappingExtension
     {
-        public static KullaniciUpsertDto MapToKullaniciExt(this Kullanici kullanici, IMapper mapper)
+        public static UserDetailDto MapToKullaniciExt(this User kullanici, IMapper mapper)
         {
-            return mapper.Map<KullaniciUpsertDto>(kullanici);
+            return mapper.Map<UserDetailDto>(kullanici);
         }
 
-        public static IEnumerable<KullaniciTableItem> MapToKullaniciTableItemList(this IEnumerable<Kullanici> kullaniciList, IMapper mapper)
+        public static IEnumerable<UserListItemDto> MapToKullaniciTableItemList(this IEnumerable<User> kullaniciList, IMapper mapper)
         {
-            return mapper.Map<IEnumerable<KullaniciTableItem>>(kullaniciList);
+            return mapper.Map<IEnumerable<UserListItemDto>>(kullaniciList);
         }
     }
 }

@@ -3,6 +3,7 @@ using Data.Extends;
 using Data.Kullanici;
 using Data.TableItem;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebAPI.Abstract;
 using WebAPI.Concrete;
@@ -11,17 +12,17 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class KullaniciController : BaseController, ICrudController<KullaniciUpsertDto, KullaniciTableItem>
+    public class KullaniciController : BaseController, ICrudController<UserDetailDto, UserListItemDto>
     {
-        private readonly IKullaniciService _kullaniciService;
+        private readonly IUserService _kullaniciService;
 
-        public KullaniciController(IKullaniciService kullaniciService)
+        public KullaniciController(IUserService kullaniciService)
         {
             _kullaniciService = kullaniciService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(KullaniciUpsertDto dto)
+        public async Task<IActionResult> Add(UserDetailDto dto)
         {
             var response = await _kullaniciService.AddAsync(dto);
             if (!response.Success) return Error(response.Errors);
@@ -29,11 +30,18 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(KullaniciUpsertDto dto)
+        public async Task<IActionResult> Delete(UserDetailDto dto)
         {
             var response = await _kullaniciService.DeleteAsync(dto);
             if (!response.Success) return Error(response.Errors);
             return Success();
+
+            var telefon = new Telefon();
+            telefon.EkranBoyutu = 7;
+            telefon.Marka = "Xiaomi";
+
+            var telefonListesi = new List<Telefon>();
+
         }
 
         [HttpGet("{id}")]
@@ -47,7 +55,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
-            var a = new KullaniciTableFilter();
+            var a = new UserListFilterDto();
             var response = await _kullaniciService.GetListAsync(a);
             if (!response.Success) return Error(response.Errors);
             return Success(response.Data);
@@ -56,7 +64,7 @@ namespace WebAPI.Controllers
         [HttpGet("page={pageNumber}/size={pageSize}")]
         public async Task<IActionResult> GetList(int pageNumber, int pageSize)
         {
-            var a = new KullaniciTableFilter();
+            var a = new UserListFilterDto();
             var response = await _kullaniciService.GetPagedListAsync(pageNumber, pageSize, a);
 
             if (!response.Success) return Error(response.Errors);
@@ -64,7 +72,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(KullaniciUpsertDto dto)
+        public async Task<IActionResult> Update(UserDetailDto dto)
         {
             var response = await _kullaniciService.UpdateAsync(dto);
             if (!response.Success) return Error(response.Errors);

@@ -14,9 +14,9 @@ namespace Business
         public static void AddBusinessConfiguration(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(BusinessRegistration));
-            services.AddScoped(typeof(IBaseService<,,,>), typeof(BaseService<,,,>));
+            services.AddScoped(typeof(ICrudService<,,,>), typeof(BaseService<,,,>));
 
-            services.AddTransient<IKullaniciService, KullaniciService>();
+            services.AddTransient<IUserService, UserService>();
 
             AddDataAccessConfiguration(services);
         }
@@ -27,7 +27,7 @@ namespace Business
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
-            services.AddTransient<IKullaniciRepository, KullaniciRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
     }
 }
