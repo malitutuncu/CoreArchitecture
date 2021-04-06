@@ -11,7 +11,7 @@ namespace WebAPI.Abstract
             Post, put, delete vs metodları aktif sekilde kullanılması yapılacak
    aaa
     */
-    public interface ICrudController<TExtend, TTableItem>
+    public interface ICrudController<TExtendDto, TListItemDto>
     {
         [HttpGet]
         Task<IActionResult> GetList();
@@ -23,13 +23,13 @@ namespace WebAPI.Abstract
         Task<IActionResult> GetById(int id);
 
         [HttpPost]
-        Task<IActionResult> Add(TExtend dto);
+        Task<IActionResult> Add(TExtendDto dto);
 
         [HttpPut]
-        Task<IActionResult> Update(TExtend dto);
+        Task<IActionResult> Update(TExtendDto dto);
 
         [HttpDelete("{id}")]
-        Task<IActionResult> Delete(TExtend dto);
+        Task<IActionResult> Delete(TExtendDto dto);
 
 
     }

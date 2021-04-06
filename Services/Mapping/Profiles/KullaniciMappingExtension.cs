@@ -6,9 +6,9 @@ namespace Business.Mapping.Profiles
 {
     public static class KullaniciMappingExtension
     {
-        public static UserDetailDto MapToKullaniciExt(this User kullanici, IMapper mapper)
+        public static UserExtendDto MapToKullaniciExt(this User kullanici, IMapper mapper)
         {
-            return mapper.Map<UserDetailDto>(kullanici);
+            return mapper.Map<UserExtendDto>(kullanici);
         }
 
         public static IEnumerable<UserListItemDto> MapToKullaniciTableItemList(this IEnumerable<User> kullaniciList, IMapper mapper)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.User
 {
-    public class UserDetailDto : BaseUser
+    public class UserExtendDto : BaseUser
     {
      
     }

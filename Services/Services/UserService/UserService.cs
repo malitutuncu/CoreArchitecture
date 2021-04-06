@@ -11,9 +11,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Business.Services.KullaniciService
+namespace Business.Services.UserService
 {
-    public class UserService : CrudService<User, UserDetailDto, UserListItemDto, UserListFilterDto>, IUserService
+    public class UserService : CrudService<User, UserExtendDto, UserListItemDto, UserListFilterDto>, IUserService
     {
         public UserService(IUnitOfWork<User> uow, IMapper mapper) : base(uow, mapper)
         {

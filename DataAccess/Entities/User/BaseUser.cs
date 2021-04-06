@@ -10,12 +10,13 @@ namespace DataAccess.Entities.User
     {
         public BaseUser()
         {
-            Durum = true;
+            IsActive = true;
         }
         public int Id { get; set; }
-        public string KullaniciAdi { get; set; }
-        public string AdiSoyadi { get; set; }
+        public string Username { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
         public string Email { get; set; }
-        public bool Durum { get; set; }
+        public bool IsActive { get; set; }
     }
 }
