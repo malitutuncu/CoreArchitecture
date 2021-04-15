@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Data.User;
+using DataAccess.Entities.User;
+using DTOs.User;
 using System.Collections.Generic;
 
 namespace Business.Mapping.Profiles

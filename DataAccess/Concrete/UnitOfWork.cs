@@ -1,8 +1,6 @@
 ﻿using Core.Data;
 using Core.DataAccess;
 using DataAccess.Abstract;
-using DataAccess.Repositories.Abstract;
-using DataAccess.Repositories.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;

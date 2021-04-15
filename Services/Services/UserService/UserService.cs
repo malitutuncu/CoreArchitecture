@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using Business.Concrete;
-using Business.Services.KullaniciService.ValidationRules;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
-using Data.User;
 using DataAccess.Abstract;
 using DataAccess.Entities.User;
+using DTOs.User;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -22,7 +21,7 @@ namespace Business.Services.UserService
         public override Task<PagedResult<IEnumerable<UserListItemDto>>> GetPagedListAsync(int pageNumber, int pageSize, UserListFilterDto filter)
         {
             Expression<Func<User, bool>> expression = x =>
-                x.KullaniciAdi.Contains(filter.KullaniciAdi);
+                x.Username.Contains(filter.KullaniciAdi);
 
             return BaseGetPagedListAsync(pageNumber, pageSize, expression);
         }

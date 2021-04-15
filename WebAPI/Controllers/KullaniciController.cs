@@ -1,5 +1,5 @@
 ﻿using Business.Services.UserService;
-using Data.User;
+using DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

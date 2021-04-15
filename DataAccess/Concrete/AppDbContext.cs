@@ -1,5 +1,5 @@
 ﻿
-using Data.Entity;
+using DataAccess.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -33,6 +33,6 @@ namespace DataAccess.Concrete
             }
         }
 
-        public DbSet<Kullanici> Kullanici { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

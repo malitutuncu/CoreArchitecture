@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Data.Extends;
-using Data.TableItem;
+using DataAccess.Entities.User;
+using DTOs.User;
 
 namespace Business.Mapping.Profiles
 {
@@ -8,11 +8,11 @@ namespace Business.Mapping.Profiles
     {
         public KullaniciProfile()
         {
-            CreateMap<Kullanici, UserDetailDto>();
-            CreateMap<UserDetailDto, Kullanici>();
+            CreateMap<User, UserExtendDto>();
+            CreateMap<UserExtendDto, User>();
 
-            CreateMap<Kullanici, UserListItemDto>();
-            CreateMap<UserListItemDto, Kullanici>();
+            CreateMap<User, UserListItemDto>();
+            CreateMap<UserListItemDto, User>();
         }
     }
 }

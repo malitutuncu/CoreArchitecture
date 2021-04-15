@@ -1,4 +1,4 @@
-﻿using Data.User;
+﻿using DTOs.User;
 using FluentValidation;
 
 namespace Business.Services.UserService.ValidationRules

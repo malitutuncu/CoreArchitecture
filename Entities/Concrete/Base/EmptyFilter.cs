@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Concrete.Base
+namespace DTOs.Concrete.Base
 {
     public class EmptyFilter
     {
