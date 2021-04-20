@@ -28,7 +28,7 @@ namespace Business.Concrete
         {
             _uow = uow;
             _mapper = mapper;
-            // _validator = TUpsertValidator; //new KullaniciUpsertValidator();
+            // _validator = TUpsertValidator; //new UserAddOrEditValidator();
 
             UpsertValidatorType = typeof(UserAddOrEditValidator);//GetType().GetGenericArguments()[0];
             //var str = "Product.List"
