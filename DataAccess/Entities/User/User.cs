@@ -15,8 +15,8 @@ namespace DataAccess.Entities.User
         }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-        public byte[] ParolaSalt { get; set; }
-        public byte[] ParolaHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
+        public byte[] PasswordHash { get; set; }
 
 
     }

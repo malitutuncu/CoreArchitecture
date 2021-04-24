@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Extensions;
 
 namespace WebAPI
 {
@@ -28,6 +29,9 @@ namespace WebAPI
         {
             services.AddBusinessConfiguration();
             services.AddControllers();
+            services.AddCustomAuthentication(Configuration);
+
+
             services.AddMvc()
             .AddJsonOptions(options => {
                 options.JsonSerializerOptions.IgnoreNullValues = true;

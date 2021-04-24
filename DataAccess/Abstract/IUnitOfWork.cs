@@ -12,5 +12,6 @@ namespace DataAccess.Abstract
     {
         IRepository<T> Repository { get; }
         Task CommitAsync();
+        void Commit();
     }
 }

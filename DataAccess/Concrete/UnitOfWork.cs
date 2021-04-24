@@ -12,12 +12,19 @@ namespace DataAccess.Concrete
     public class UnitOfWork<T> : IUnitOfWork<T> where T : class, IEntity
     {
         private readonly AppDbContext _context;
+        private Dictionary<Type, object> repos;
         public UnitOfWork(AppDbContext appDbContext)
         {
             _context = appDbContext;
+            repos = new Dictionary<Type, object>();
         }
 
         public IRepository<T> Repository => new BaseRepository<T>(_context);
+
+        public void Commit()
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task CommitAsync()
         {

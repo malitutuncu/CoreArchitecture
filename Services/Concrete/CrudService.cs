@@ -13,25 +13,20 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class CrudService<TEntity, TExtendDto, TListItemDto, TListFilterDto> :
+    public class CrudService<TEntity, TExtendDto, TListItemDto, TListFilterDto> : BaseService ,
         ICrudService<TEntity, TExtendDto, TListItemDto, TListFilterDto>
         where TEntity : class, IEntity
-        where TExtendDto : class
+        where TExtendDto : class 
     {
         private readonly IUnitOfWork<TEntity> _uow;
         private readonly IMapper _mapper;
 
-        private static Type UpsertValidatorType;
         private IValidator _validator;
 
         public CrudService(IUnitOfWork<TEntity> uow, IMapper mapper)
         {
             _uow = uow;
             _mapper = mapper;
-            // _validator = TUpsertValidator; //new UserAddOrEditValidator();
-
-            UpsertValidatorType = typeof(UserAddOrEditValidator);//GetType().GetGenericArguments()[0];
-            //var str = "Product.List"
         }
 
         public async virtual Task<IDataResult<TExtendDto>> AddAsync(TExtendDto extEntity)
@@ -114,22 +109,6 @@ namespace Business.Concrete
             return new PagedResult<IEnumerable<TListItemDto>>(list, totalCount, pageNumber, pageSize);
         }
 
-        public IResult Success()
-        {
-            var result = new Result();
-            return result.SuccesResult();
-        }
-
-        public IDataResult<T> Success<T>(T data)
-        {
-            var result = new DataResult<T>();
-            return result.SuccesResult(data);
-        }
-
-        public IResult Error(string mesaj)
-        {
-            var result = new Result();
-            return result.ErrorResult(mesaj);
-        }
+      
     }
 }
