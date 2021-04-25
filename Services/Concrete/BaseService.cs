@@ -1,4 +1,5 @@
 ﻿using Core.Utilities.Results;
+using DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,17 @@ namespace Business.Concrete
             return result.SuccesResult();
         }
 
-        public IDataResult<T> Success<T>(T data)
+        public static IDataResult<T> Success<T>(T data)
         {
             var result = new DataResult<T>();
             return result.SuccesResult(data);
         }
 
-        public IResult Error(string mesaj)
+        public  IResult Error(string mesaj)
         {
             var result = new Result();
             return result.ErrorResult(mesaj);
         }
+
     }
 }

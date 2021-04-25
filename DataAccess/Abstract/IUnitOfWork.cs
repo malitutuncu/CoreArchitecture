@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface IUnitOfWork<T> where  T : class, IEntity
+    public interface IUnitOfWork : IDisposable
     {
-        IRepository<T> Repository { get; }
+        IRepository<T> GetRepository<T>() where T : class, IEntity;
         Task CommitAsync();
         void Commit();
     }
