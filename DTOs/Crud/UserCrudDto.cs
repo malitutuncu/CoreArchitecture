@@ -1,11 +1,23 @@
-﻿using System;
+﻿using DataAccess.Entities.Users;
+using DTOs.Concrete.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTOs.User
+namespace DTOs.Crud
 {
+    public class UserExtendDto : BaseUser
+    {
+
+    }
+
+    public class UserListFilterDto : ListFilter
+    {
+        public string KullaniciAdi { get; set; }
+    }
+
     public class UserListItemDto
     {
         public int Id { get; set; }

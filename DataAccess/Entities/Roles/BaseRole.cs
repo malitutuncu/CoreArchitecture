@@ -9,5 +9,6 @@ namespace DataAccess.Entities.Roles
     public class BaseRole
     {
         public string Name { get; set; }
+        public string DisplayName { get; set; }
     }
 }

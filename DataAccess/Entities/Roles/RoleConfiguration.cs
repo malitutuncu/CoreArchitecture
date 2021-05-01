@@ -15,7 +15,7 @@ namespace DataAccess.Entities.Roles
             builder.HasNoKey();
             builder.ToTable(name: "Roles");
             builder.Property(x => x.Name).IsRequired().HasMaxLength(256);
-
+            builder.Property(x => x.DisplayName).IsRequired().HasMaxLength(256);
 
             builder.HasIndex(x => x.Name).IsUnique();
         }
