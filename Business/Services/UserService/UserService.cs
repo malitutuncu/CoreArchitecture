@@ -3,7 +3,7 @@ using Business.Concrete;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using DataAccess.Entities.User;
+using DataAccess.Entities.Users;
 using DTOs.User;
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,6 @@ namespace Business.Services.UserService
 {
     public class UserService : CrudService<User, UserExtendDto, UserListItemDto, UserListFilterDto>, IUserService
     {
-        public UserService(IUnitOfWork<User> uow, IMapper mapper) : base(uow, mapper)
-        {
-        }
-
         public override Task<PagedResult<IEnumerable<UserListItemDto>>> GetPagedListAsync(int pageNumber, int pageSize, UserListFilterDto filter)
         {
             Expression<Func<User, bool>> expression = x =>

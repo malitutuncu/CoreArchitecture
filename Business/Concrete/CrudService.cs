@@ -3,6 +3,8 @@ using Business.Services.UserService.ValidationRules;
 using Core.Business;
 using Core.CrossCuttings.Validation;
 using Core.Data;
+using Core.DataAccess;
+using Core.Utilities.IoC;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using FluentValidation;
@@ -10,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Business.Concrete
 {
@@ -18,15 +21,17 @@ namespace Business.Concrete
         where TEntity : class, IEntity
         where TExtendDto : class 
     {
-        private readonly IUnitOfWork<TEntity> _uow;
-        private readonly IMapper _mapper;
 
+        private readonly IRepository<TEntity> _repository;
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _uow;
         private IValidator _validator;
 
-        public CrudService(IUnitOfWork<TEntity> uow, IMapper mapper)
+        public CrudService()
         {
-            _uow = uow;
-            _mapper = mapper;
+            _mapper =ServiceTool.ServiceProvider.GetService<IMapper>();
+            _uow = ServiceTool.ServiceProvider.GetService< IUnitOfWork>();
+            _repository = _uow.GetRepository<TEntity>();
         }
 
         public async virtual Task<IDataResult<TExtendDto>> AddAsync(TExtendDto extEntity)
@@ -34,7 +39,7 @@ namespace Business.Concrete
             ValidationTool.Validate(_validator, extEntity);
 
             var entity = _mapper.Map<TEntity>(extEntity);
-            var addedEntity = await _uow.Repository.AddAsync(entity);
+            var addedEntity = await _repository.AddAsync(entity);
             await _uow.CommitAsync();
             return Success(_mapper.Map<TExtendDto>(addedEntity));
         }
@@ -42,7 +47,7 @@ namespace Business.Concrete
         public async virtual Task<IDataResult<TExtendDto>> UpdateAsync(TExtendDto extEntity)
         {
             var entity = _mapper.Map<TEntity>(extEntity);
-            var updateEntity = await _uow.Repository.UpdateAsync(entity);
+            var updateEntity = await _repository.UpdateAsync(entity);
             await _uow.CommitAsync();
             return Success(_mapper.Map<TExtendDto>(updateEntity));
         }
@@ -50,7 +55,7 @@ namespace Business.Concrete
         public async Task<IResult> DeleteAsync(TExtendDto extEntity)
         {
             var entity = _mapper.Map<TEntity>(extEntity);
-            await Task.Run(() => { _uow.Repository.DeleteAsync(entity); });
+            await Task.Run(() => { _repository.DeleteAsync(entity); });
             return Success();
         }
 
@@ -66,13 +71,13 @@ namespace Business.Concrete
 
         public async Task<IDataResult<TExtendDto>> GetAsync(Expression<Func<TEntity, bool>> expression)
         {
-            var entity = await _uow.Repository.GetAsync(expression);
+            var entity = await _repository.GetAsync(expression);
             return Success(_mapper.Map<TExtendDto>(entity));
         }
 
         public async Task<IDataResult<TExtendDto>> GetByIdAsync(int id)
         {
-            var entity = await _uow.Repository.GetByIdAsync(id);
+            var entity = await _repository.GetByIdAsync(id);
             return Success(_mapper.Map<TExtendDto>(entity));
         }
 
@@ -81,9 +86,9 @@ namespace Business.Concrete
             int count;
 
             if (expression == null)
-                count = await _uow.Repository.GetCountAsync();
+                count = await _repository.GetCountAsync();
             else
-                count = await _uow.Repository.GetCountAsync(expression);
+                count = await _repository.GetCountAsync(expression);
 
             return Success(count);
         }
@@ -92,16 +97,16 @@ namespace Business.Concrete
         {
             IEnumerable<TEntity> entityList;
             if (expression == null)
-                entityList = await _uow.Repository.GetListAsync();
+                entityList = await _repository.GetListAsync();
             else
-                entityList = await _uow.Repository.GetListAsync(expression);
+                entityList = await _repository.GetListAsync(expression);
 
             return Success(_mapper.Map<IEnumerable<TListItemDto>>(entityList));
         }
 
         protected async Task<PagedResult<IEnumerable<TListItemDto>>> BaseGetPagedListAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> expression = null)
         {
-            var response = await _uow.Repository.GetPagedListAsync(pageNumber, pageSize, expression);
+            var response = await _repository.GetPagedListAsync(pageNumber, pageSize, expression);
 
             var totalCount = response.Item2;
             var list = _mapper.Map<IEnumerable<TListItemDto>>(response.Item1);

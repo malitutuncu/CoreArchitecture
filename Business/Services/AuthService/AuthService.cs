@@ -1,12 +1,15 @@
 ﻿using Business.Concrete;
 using Business.Services.UserService;
+using Core.Constants;
+using Core.CrossCuttings.Caching;
 using Core.DataAccess;
+using Core.Helpers.Caching;
 using Core.Utilities.Results;
 using Core.Utilities.Security;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Token;
 using DataAccess.Abstract;
-using DataAccess.Entities.User;
+using DataAccess.Entities.Users;
 using DataAccess.Repositories.UserRepository;
 using DTOs.User;
 using System;
@@ -20,12 +23,15 @@ namespace Business.Services.AuthService
 {
     public class AuthService : BaseService, IAuthService
     {
-        private ITokenHelper _tokenHelper;
+        private readonly ITokenHelper _tokenHelper;
         private readonly IUnitOfWork _uow;
+        private readonly ICacheManager _cacheManager;
         private readonly IRepository<User> _userRepository;
-        public AuthService(IUnitOfWork uow)
+        public AuthService(IUnitOfWork uow, ITokenHelper tokenHelper, ICacheManager cacheManager)
         {
             _uow = uow;
+            _tokenHelper = tokenHelper;
+            _cacheManager = cacheManager;
             _userRepository = _uow.GetRepository<User>();
         }
 
@@ -65,14 +71,20 @@ namespace Business.Services.AuthService
             await _uow.CommitAsync();
 
             var accessToken = CreateAccessToken(user);
+            //_userService.GetRoles();
+            _cacheManager.Add(CacheKeyHelper.GetKeyUserRoles(user.Id),"asd");
 
             return Success(accessToken);
         }
 
         private AccessToken CreateAccessToken(User user)
         {
-            var claims = new List<Claim>();
-            //todo :baslıca claimler  ekleneecek, digerleri cache mekanızmasından getirilkecek token uzamamsı icin, userId, username, vb
+            var claims = new List<Claim> {
+                new Claim(CustomClaimTypes.UserId, user.Id.ToString()),
+                new Claim(CustomClaimTypes.Email , user.Email),
+                new Claim(CustomClaimTypes.Username, user.Username),
+            };
+
             var accessToken = _tokenHelper.CreateToken(claims);
             return accessToken;
         }

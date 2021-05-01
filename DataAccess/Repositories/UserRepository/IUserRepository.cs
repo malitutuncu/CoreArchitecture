@@ -1,6 +1,6 @@
 ﻿using Core.Data;
 using Core.DataAccess;
-using DataAccess.Entities.User;
+using DataAccess.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;

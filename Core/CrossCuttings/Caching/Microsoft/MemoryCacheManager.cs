@@ -18,9 +18,12 @@ namespace Core.CrossCuttings.Caching.Microsoft
         {
             _cache = ServiceTool.ServiceProvider.GetService<IMemoryCache>();
         }
-        public void Add(string key, object data, int duration)
+        public void Add(string key, object data, int duration = 0)
         {
-            _cache.Set(key, data, TimeSpan.FromMinutes(duration));
+            if (duration == 0)
+                _cache.Set(key, data);
+            else
+                _cache.Set(key, data, TimeSpan.FromMinutes(duration));
         }
 
         public T Get<T>(string key)

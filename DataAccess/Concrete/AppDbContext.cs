@@ -1,5 +1,5 @@
 ﻿
-using DataAccess.Entities.User;
+using DataAccess.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;

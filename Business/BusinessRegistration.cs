@@ -25,7 +25,7 @@ namespace Business
         {
             services.AddDbContext<AppDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
-            services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<IUserRepository, UserRepository>();
         }

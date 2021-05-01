@@ -1,5 +1,5 @@
 ﻿using Core.Business;
-using DataAccess.Entities.User;
+using DataAccess.Entities.Users;
 using DTOs.User;
 
 namespace Business.Services.UserService

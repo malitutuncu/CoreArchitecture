@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Entities.User
+namespace DataAccess.Entities.Users
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
@@ -19,8 +19,8 @@ namespace DataAccess.Entities.User
             builder.Property(x => x.Email).HasMaxLength(200);
             builder.Property(x => x.Firstname).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Lastname).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.ParolaHash).IsRequired();
-            builder.Property(x => x.ParolaSalt).IsRequired();
+            builder.Property(x => x.PasswordHash).IsRequired();
+            builder.Property(x => x.PasswordSalt).IsRequired();
 
             builder.HasIndex(u => u.Email).IsUnique();
         }
